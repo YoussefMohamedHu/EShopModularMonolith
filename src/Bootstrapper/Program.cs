@@ -1,4 +1,6 @@
+using Carter;
 using Microsoft.EntityFrameworkCore;
+using shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,11 +9,14 @@ builder.Services
     .AddOrderModule(builder.Configuration)
     .AddBasketModule(builder.Configuration);
 
+builder.Services.AddCarterWithAssemblies(typeof(CatalogModule).Assembly);
+
 var app = builder.Build();
 
 DatabaseInitializer(app);
 
 app.MapGet("/", () => "Hello World!");
+app.MapCarter();
 
 app.Run();
 

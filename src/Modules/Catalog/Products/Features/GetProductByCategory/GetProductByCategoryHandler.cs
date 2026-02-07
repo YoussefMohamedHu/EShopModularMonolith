@@ -16,10 +16,17 @@ namespace catalog.Products.Features.GetProductByCategory
     {
         async Task<GetProductByCategoryResult> IRequestHandler<GetProductByCategoryQuery, GetProductByCategoryResult>.Handle(GetProductByCategoryQuery request, CancellationToken cancellationToken)
         {
+            var categoryToken = request.category.Trim();
+            var pattern = $"%{categoryToken}%";
+
             var products = await dbContext.Products
+                .FromSqlInterpolated($@"
+                    SELECT *
+                    FROM ""Catalog"".""Products""
+                    WHERE ""Category"" LIKE {pattern}
+                ")
                 .AsNoTracking()
                 .OrderBy(p => p.Name)
-                .Where(p => p.Category.Contains(request.category))
                 .Select(p => new ProductDto(
                     p.Id,
                     p.Name,
