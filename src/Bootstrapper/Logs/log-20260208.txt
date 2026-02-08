@@ -1,0 +1,5 @@
+2026-02-08 17:49:45.430 +02:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-02-08 17:49:46.199 +02:00 [WRN] The property 'Product.Category' is a collection or enumeration type with a value converter but with no value comparer. Set a value comparer to ensure the collection/enumeration elements are compared correctly.
+2026-02-08 17:51:07.752 +02:00 [INF] [START] Handle Request=GetProductByIdQuery, response=GetProductByIdResult, RequestData=GetProductByIdQuery { productId = b3a589d9-5b77-4f4b-9642-c77259591674 }
+2026-02-08 17:51:07.939 +02:00 [INF] [END] Handle Request=GetProductByIdQuery, response=GetProductByIdResult, ElapsedTime=180ms
+2026-02-08 17:51:07.971 +02:00 [INF] HTTP GET /product/b3a589d9-5b77-4f4b-9642-c77259591674 responded 200 in 234.1376 ms

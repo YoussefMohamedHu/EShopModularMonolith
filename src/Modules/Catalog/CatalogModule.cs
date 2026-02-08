@@ -1,9 +1,11 @@
 ﻿using catalog.Data;
 using catalog.Data.Seeds;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using shared.Behaviors;
 using shared.Data.Interceptors;
 using shared.Data.Seed;
 using System.Reflection;
@@ -20,8 +22,15 @@ public static class CatalogModule
 
         #endregion
         #region Application
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
+        });
+
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         #endregion
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         #region Infrastructure
 
         var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -43,3 +52,4 @@ public static class CatalogModule
 
     
 }
+ 

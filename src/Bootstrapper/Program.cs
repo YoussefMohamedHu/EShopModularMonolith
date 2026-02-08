@@ -1,8 +1,17 @@
 using Carter;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((hostingContext, configuration) =>
+{
+    configuration.ReadFrom.Configuration(hostingContext.Configuration);
+});
 
 builder.Services
     .AddCatalogModule(builder.Configuration)
@@ -13,10 +22,38 @@ builder.Services.AddCarterWithAssemblies(typeof(CatalogModule).Assembly);
 
 var app = builder.Build();
 
+
 DatabaseInitializer(app);
 
 app.MapGet("/", () => "Hello World!");
 app.MapCarter();
+app.UseSerilogRequestLogging();
+app.UseExceptionHandler(exceptionHandlerApp =>
+{
+    exceptionHandlerApp.Run(async context =>
+    {
+        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+        if (exception is null)
+        {
+            return;
+        }
+
+        var problemDetails = new ProblemDetails
+        {
+            Title = exception.Message,
+            Status = StatusCodes.Status500InternalServerError,
+            Detail = exception.StackTrace
+        };
+
+        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+        logger.LogError(exception, exception.Message);
+
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "application/problem+json";
+
+        await context.Response.WriteAsJsonAsync(problemDetails);
+    });
+});
 
 app.Run();
 

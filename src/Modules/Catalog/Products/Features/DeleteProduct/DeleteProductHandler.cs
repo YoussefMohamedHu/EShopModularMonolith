@@ -1,4 +1,5 @@
 ﻿using catalog.Data;
+using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,14 @@ namespace catalog.Products.Features.DeleteProduct
 {
     public record DeleteProductCommand(Guid productId) : IRequest<DeleteProductResult>;
     public record DeleteProductResult(bool isSuccess);
+    public class DeleteProductCommandValidator : AbstractValidator<DeleteProductCommand>
+    {
+        public DeleteProductCommandValidator()
+        {
+            RuleFor(c => c.productId)
+                .NotEmpty().WithMessage("Product id is required.");
+        }
+    }
     public class DeleteProductHandler(CatalogDbContext dbContext) : IRequestHandler<DeleteProductCommand,DeleteProductResult>
     {
         async Task<DeleteProductResult> IRequestHandler<DeleteProductCommand, DeleteProductResult>.Handle(DeleteProductCommand command, CancellationToken cancellationToken)
