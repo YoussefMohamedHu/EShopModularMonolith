@@ -4,6 +4,15 @@
     <ProjectReference Include="..\..\shared\shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Basket\EventHandlers\" />
+    <Folder Include="Basket\Features\CheckoutBasket\" />
+    <Folder Include="Basket\Features\UpdateItemPriceInBasket\" />
+    <Folder Include="Basket\Features\RemoveItemFromBasket\" />
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="Data\Seeds\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

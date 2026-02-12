@@ -18,7 +18,9 @@ builder.Services
     .AddOrderModule(builder.Configuration)
     .AddBasketModule(builder.Configuration);
 
-builder.Services.AddCarterWithAssemblies(typeof(CatalogModule).Assembly);
+builder.Services.AddCarterWithAssemblies(
+    typeof(CatalogModule).Assembly,
+    typeof(BasketModule).Assembly);
 
 var app = builder.Build();
 
@@ -46,7 +48,7 @@ app.UseExceptionHandler(exceptionHandlerApp =>
         };
 
         var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-        logger.LogError(exception, exception.Message);
+        logger.LogError(exception, message: exception.Message);
 
         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Response.ContentType = "application/problem+json";
@@ -67,6 +69,11 @@ static async void DatabaseInitializer(WebApplication app)
     var catalogDbContext = scope.ServiceProvider.GetRequiredService<catalog.Data.CatalogDbContext>();
     await catalogDbContext.Database.EnsureCreatedAsync();
     await catalogDbContext.Database.MigrateAsync();
+
+    // Basket Module 
+    var basketDbContext = scope.ServiceProvider.GetRequiredService<basket.Data.BasketDbContext>();
+    await basketDbContext.Database.EnsureCreatedAsync();
+    await basketDbContext.Database.MigrateAsync();
 
     #endregion
 
