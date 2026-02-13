@@ -18,6 +18,11 @@ builder.Services
     .AddOrderModule(builder.Configuration)
     .AddBasketModule(builder.Configuration);
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
 builder.Services.AddCarterWithAssemblies(
     typeof(CatalogModule).Assembly,
     typeof(BasketModule).Assembly);

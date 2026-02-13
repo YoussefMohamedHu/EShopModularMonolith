@@ -2,6 +2,7 @@ using basket.Data;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Modules.Basket.Data.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,20 +21,13 @@ public class DeleteBasketCommandValidator : AbstractValidator<DeleteBasketComman
     }
 }
 
-public class DeleteBasketHandler(BasketDbContext dbContext) : IRequestHandler<DeleteBasketCommand, DeleteBasketResult>
+public class DeleteBasketHandler(IBasketRepository basketRepository) : IRequestHandler<DeleteBasketCommand, DeleteBasketResult>
 {
     async Task<DeleteBasketResult> IRequestHandler<DeleteBasketCommand, DeleteBasketResult>.Handle(DeleteBasketCommand command, CancellationToken cancellationToken)
     {
-        var shoppingCart = await dbContext.ShoppingCarts
-            .SingleOrDefaultAsync(cart => cart.UserName == command.UserName, cancellationToken);
-
-        if (shoppingCart is null)
-        {
-            return new DeleteBasketResult(false);
-        }
-
-        dbContext.ShoppingCarts.Remove(shoppingCart);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        
+        await basketRepository.DeleteBasket(command.UserName,cancellationToken);
+        await basketRepository.SaveChangesAsync(cancellationToken,command.UserName);
 
         return new DeleteBasketResult(true);
     }

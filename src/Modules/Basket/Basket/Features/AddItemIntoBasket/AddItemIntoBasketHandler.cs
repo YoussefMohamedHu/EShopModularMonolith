@@ -3,6 +3,7 @@ using basket.Data;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Modules.Basket.Data.Repositories;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,11 +23,11 @@ public class AddItemIntoBasketCommandValidator : AbstractValidator<AddItemIntoBa
     }
 }
 
-public class AddItemIntoBasketHandler(BasketDbContext dbContext) : IRequestHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
+public class AddItemIntoBasketHandler(IBasketRepository basketRepository) : IRequestHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
 {
     public async Task<AddItemIntoBasketResult> Handle(AddItemIntoBasketCommand command, CancellationToken cancellationToken)
     {
-        var shoppingCart = await dbContext.ShoppingCarts.SingleOrDefaultAsync(cart => cart.UserName == command.UserName, cancellationToken);
+        var shoppingCart = await basketRepository.GetBasket(command.UserName,false, cancellationToken);
 
         if (shoppingCart == null)
         {
@@ -40,7 +41,7 @@ public class AddItemIntoBasketHandler(BasketDbContext dbContext) : IRequestHandl
             command.Item.Price,
             command.Item.ProductName);
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await basketRepository.SaveChangesAsync(cancellationToken, command.UserName);
 
         return new AddItemIntoBasketResult(shoppingCart.Id);
     }

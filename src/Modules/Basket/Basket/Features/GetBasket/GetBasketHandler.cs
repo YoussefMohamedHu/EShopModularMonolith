@@ -2,20 +2,19 @@ using basket.Basket.Dtos;
 using basket.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Modules.Basket.Data.Repositories;
 
 namespace basket.Basket.Features.GetBasket;
 
 public record GetBasketQuery(string UserName) : IRequest<GetBasketResult>;
 public record GetBasketResult(ShoppingCartDto? ShoppingCart);
 
-public class GetBasketHandler(BasketDbContext dbContext) : IRequestHandler<GetBasketQuery, GetBasketResult>
+public class GetBasketHandler(IBasketRepository basketRepository) : IRequestHandler<GetBasketQuery, GetBasketResult>
 {
     async Task<GetBasketResult> IRequestHandler<GetBasketQuery, GetBasketResult>.Handle(GetBasketQuery query, CancellationToken cancellationToken)
     {
-        var shoppingCart = await dbContext.ShoppingCarts
-            .Include(cart => cart.Items)
-            .AsNoTracking()
-            .SingleOrDefaultAsync(cart => cart.UserName == query.UserName, cancellationToken);
+        var shoppingCart = await basketRepository.GetBasket(query.UserName,true,cancellationToken);
+            
 
         if (shoppingCart is null)
         {

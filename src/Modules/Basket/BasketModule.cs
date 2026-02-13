@@ -1,10 +1,12 @@
 ﻿using System.Reflection;
 using basket.Data;
+using basket.Data.Repositories;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Modules.Basket.Data.Repositories;
 using shared.Behaviors;
 using shared.Data.Interceptors;
 using shared.Data.Seed;
@@ -25,8 +27,11 @@ public static class BasketModule
         });
 
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+        services.AddScoped<IBasketRepository, BasketRepository>();
+        services.Decorate<IBasketRepository, CachedBasketRepository>();
         #endregion
-   
+
         #region Infrastructure
 
         var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -39,6 +44,8 @@ public static class BasketModule
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseNpgsql(connectionString);
         });
+
+        
 
         //services.AddScoped<IDataSeeder, BasketDataSeeder>();
 

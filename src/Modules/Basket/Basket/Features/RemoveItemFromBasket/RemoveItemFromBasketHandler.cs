@@ -2,6 +2,7 @@ using basket.Data;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Modules.Basket.Data.Repositories;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,13 +26,11 @@ public class RemoveItemFromBasketCommandValidator : AbstractValidator<RemoveItem
     }
 }
 
-public class RemoveItemFromBasketHandler(BasketDbContext dbContext) : IRequestHandler<RemoveItemFromBasketCommand, RemoveItemFromBasketResult>
+public class RemoveItemFromBasketHandler(IBasketRepository basketRepository) : IRequestHandler<RemoveItemFromBasketCommand, RemoveItemFromBasketResult>
 {
     public async Task<RemoveItemFromBasketResult> Handle(RemoveItemFromBasketCommand command, CancellationToken cancellationToken)
     {
-        var shoppingCart = await dbContext.ShoppingCarts
-            .Include(cart => cart.Items)
-            .SingleOrDefaultAsync(cart => cart.UserName == command.UserName, cancellationToken);
+        var shoppingCart = await basketRepository.GetBasket(command.UserName,false, cancellationToken);
 
         if (shoppingCart is null)
         {
@@ -44,7 +43,7 @@ public class RemoveItemFromBasketHandler(BasketDbContext dbContext) : IRequestHa
         {
             return new RemoveItemFromBasketResult(false);
         }
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await basketRepository.SaveChangesAsync(cancellationToken,command.UserName);
 
         return new RemoveItemFromBasketResult(true);
     }

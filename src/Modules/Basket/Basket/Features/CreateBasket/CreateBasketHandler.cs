@@ -4,6 +4,7 @@ using basket.Data;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Modules.Basket.Data.Repositories;
 using System.Collections.Generic;
 
 namespace basket.Basket.Features.CreateBasket;
@@ -38,14 +39,12 @@ public class CreateBasketCommandValidator : AbstractValidator<CreateBasketComman
     }
 }
 
-public class CreateBasketHandler(BasketDbContext dbContext) : IRequestHandler<CreateBasketCommand, CreateBasketResult>
+public class CreateBasketHandler(IBasketRepository basketRepository) : IRequestHandler<CreateBasketCommand, CreateBasketResult>
 {
     async Task<CreateBasketResult> IRequestHandler<CreateBasketCommand, CreateBasketResult>.Handle(CreateBasketCommand command, CancellationToken cancellationToken)
     {
         var userName = command.UserName;
-        var existingCart = await dbContext.ShoppingCarts
-            .AsNoTracking()
-            .FirstOrDefaultAsync(cart => cart.UserName == userName, cancellationToken);
+        var existingCart = await basketRepository.GetBasket(userName, asNoTracking: true, cancellationToken);
 
         if (existingCart is not null)
         {
@@ -59,8 +58,9 @@ public class CreateBasketHandler(BasketDbContext dbContext) : IRequestHandler<Cr
             shoppingCart.AddItem(item.ProductId, item.Quantity, item.Color, item.Price, item.ProductName);
         }
 
-        dbContext.ShoppingCarts.Add(shoppingCart);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await basketRepository.CreateBasket(shoppingCart, cancellationToken);
+
+        await basketRepository.SaveChangesAsync(cancellationToken);
 
         return new CreateBasketResult(shoppingCart.Id);
     }
