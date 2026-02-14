@@ -4,11 +4,10 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using System.Collections.Generic;
 
 namespace basket.Basket.Features.CreateBasket;
 
-public record CreateBasketRequest(List<ShoppingCartItemDto> Items);
+public record CreateBasketRequest(List<ShoppingCartItemRequestDto> Items);
 public record CreateBasketResponse(Guid Id);
 
 public class CreateBasketEndpoint : ICarterModule
@@ -17,7 +16,7 @@ public class CreateBasketEndpoint : ICarterModule
     {
         app.MapPost("/basket/{userName}", async (string userName, CreateBasketRequest request, ISender sender) =>
         {
-            var result = await sender.Send(new CreateBasketCommand(userName, request.Items ?? new List<ShoppingCartItemDto>()));
+            var result = await sender.Send(new CreateBasketCommand(userName, request.Items ?? new()));
             var response = new CreateBasketResponse(result.Id);
             return Results.Created($"/basket/{response.Id}", response);
         })

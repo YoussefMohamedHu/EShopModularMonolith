@@ -1,38 +1,29 @@
-﻿using catalog.Data;
-using catalog.Products.Dtos;
+using catalog.Data;
+using Catalog.Contracts.Products.Dtos;
+using Catalog.Contracts.Products.Features.GetProductById;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace catalog.Products.Features.GetProductById
 {
-    record GetProductByIdQuery(Guid productId) : IRequest<GetProductByIdResult>;
-    record GetProductByIdResult(ProductDto Product);
     public class GetProductByIdHandler(CatalogDbContext dbContext) : IRequestHandler<GetProductByIdQuery, GetProductByIdResult>
     {
-        async Task<GetProductByIdResult> IRequestHandler<GetProductByIdQuery, GetProductByIdResult>.Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
+        public async Task<GetProductByIdResult> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
         {
             var product = await dbContext.Products
                 .AsNoTracking()
-                .SingleOrDefaultAsync(p => p.Id == query.productId, cancellationToken);
+                .SingleOrDefaultAsync(p => p.Id == query.ProductId, cancellationToken);
 
             if (product is null)
             {
-                throw new Exception($"Product with id {query.productId} not found.");
+                throw new Exception($"Product with id {query.ProductId} not found.");
             }
 
-            var productDto = new ProductDto(
+            var productDto = new ProductMinimalDataDto(
                 product.Id,
                 product.Name,
-                product.Description,
-                product.Price,
-                product.ImageFile,
-                product.Category.ToList()
-                );
+                product.Price
+            );
 
             return new GetProductByIdResult(productDto);
         }

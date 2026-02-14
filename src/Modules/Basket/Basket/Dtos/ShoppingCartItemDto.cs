@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+namespace basket.Basket.Dtos;
 
-namespace basket.Basket.Dtos
-{
-    public record ShoppingCartItemDto(
-        Guid Id,
-        Guid ShoppingCartId,
-        Guid ProductId,
-        string ProductName,
-        int Quantity,
-        decimal Price,
-        string Color
-    );
-}
+// Used for API Requests - client only sends minimal data
+public record ShoppingCartItemRequestDto(
+    Guid ProductId,
+    int Quantity,
+    string Color
+);
+
+// Used for API Responses - server returns full data from database
+public record ShoppingCartItemDto(
+    Guid Id,
+    Guid ShoppingCartId,
+    Guid ProductId,
+    string ProductName,
+    int Quantity,
+    decimal Price,
+    string Color
+);

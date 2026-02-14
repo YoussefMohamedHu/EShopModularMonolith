@@ -1,6 +1,7 @@
 using basket.Basket.Dtos;
 using basket.Basket.Models;
 using basket.Data;
+using Catalog.Contracts.Products.Features.GetProductById;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ using System.Collections.Generic;
 
 namespace basket.Basket.Features.CreateBasket;
 
-public record CreateBasketCommand(string UserName, List<ShoppingCartItemDto> Items) : IRequest<CreateBasketResult>;
+public record CreateBasketCommand(string UserName, List<ShoppingCartItemRequestDto> Items) : IRequest<CreateBasketResult>;
 public record CreateBasketResult(Guid Id);
 
 public class CreateBasketCommandValidator : AbstractValidator<CreateBasketCommand>
@@ -29,19 +30,17 @@ public class CreateBasketCommandValidator : AbstractValidator<CreateBasketComman
                 .NotEmpty().WithMessage("Product id is required.");
             items.RuleFor(item => item.Quantity)
                 .GreaterThan(0).WithMessage("Quantity must be greater than zero.");
-            items.RuleFor(item => item.Price)
-                .GreaterThanOrEqualTo(0).WithMessage("Price must be a non-negative value.");
             items.RuleFor(item => item.Color)
                 .NotEmpty().WithMessage("Item color is required.");
-            items.RuleFor(item => item.ProductName)
-                .NotEmpty().WithMessage("Product name is required.");
         });
     }
 }
 
-public class CreateBasketHandler(IBasketRepository basketRepository) : IRequestHandler<CreateBasketCommand, CreateBasketResult>
+public class CreateBasketHandler(
+    IBasketRepository basketRepository,
+    ISender sender) : IRequestHandler<CreateBasketCommand, CreateBasketResult>
 {
-    async Task<CreateBasketResult> IRequestHandler<CreateBasketCommand, CreateBasketResult>.Handle(CreateBasketCommand command, CancellationToken cancellationToken)
+    public async Task<CreateBasketResult> Handle(CreateBasketCommand command, CancellationToken cancellationToken)
     {
         var userName = command.UserName;
         var existingCart = await basketRepository.GetBasket(userName, asNoTracking: true, cancellationToken);
@@ -53,13 +52,27 @@ public class CreateBasketHandler(IBasketRepository basketRepository) : IRequestH
 
         var shoppingCart = ShoppingCart.CreateShoppingCart(Guid.NewGuid(), userName);
 
+        // Fetch product data from Catalog for each item
         foreach (var item in command.Items)
         {
-            shoppingCart.AddItem(item.ProductId, item.Quantity, item.Color, item.Price, item.ProductName);
+            var productResult = await sender.Send(
+                new GetProductByIdQuery(item.ProductId),
+                cancellationToken);
+
+            if (productResult.Product is null)
+            {
+                throw new Exception($"Product with id '{item.ProductId}' not found in catalog.");
+            }
+
+            shoppingCart.AddItem(
+                item.ProductId,
+                item.Quantity,
+                item.Color,
+                productResult.Product.Price,      // FROM CATALOG (source of truth)
+                productResult.Product.Name);      // FROM CATALOG (source of truth)
         }
 
         await basketRepository.CreateBasket(shoppingCart, cancellationToken);
-
         await basketRepository.SaveChangesAsync(cancellationToken);
 
         return new CreateBasketResult(shoppingCart.Id);

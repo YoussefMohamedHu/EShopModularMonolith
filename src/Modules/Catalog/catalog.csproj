@@ -1,7 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\..\shared\shared.csproj" />
+    <ProjectReference Include="Catalog.Contracts\Catalog.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Catalog.Contracts\**" />
   </ItemGroup>
 
   <ItemGroup>
