@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using shared.Data.Seed;
-namespace shared.Data
+using Shared.Base.Data.Seed;
+namespace Shared.Base.Data
 {
     public static class Extensions
     {

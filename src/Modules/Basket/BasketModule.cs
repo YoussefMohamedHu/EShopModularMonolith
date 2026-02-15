@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using basket.Data;
 using basket.Data.Repositories;
 using FluentValidation;
@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Modules.Basket.Data.Repositories;
-using shared.Behaviors;
-using shared.Data.Interceptors;
-using shared.Data.Seed;
+using Shared.Base.Behaviors;
+using Shared.Base.Data.Interceptors;
+using Shared.Base.Data.Seed;
 
 namespace EShopModularMonolith.Modules.Basket;
 

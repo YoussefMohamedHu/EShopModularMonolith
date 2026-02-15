@@ -1,4 +1,4 @@
-﻿using shared.DDD;
+using Shared.Base.DDD;
 using System;
 using System.Collections.Generic;
 using System.Linq;

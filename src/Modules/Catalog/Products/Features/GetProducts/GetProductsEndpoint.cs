@@ -1,4 +1,4 @@
-﻿using Carter;
+using Carter;
 using catalog.Products.Dtos;
 using catalog.Products.Features.CreateProduct;
 using MediatR;
@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
-using shared.Pagination;
+using Shared.Base.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,13 +1,13 @@
-﻿using catalog.Data;
+using catalog.Data;
 using catalog.Data.Seeds;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using shared.Behaviors;
-using shared.Data.Interceptors;
-using shared.Data.Seed;
+using Shared.Base.Behaviors;
+using Shared.Base.Data.Interceptors;
+using Shared.Base.Data.Seed;
 using System.Reflection;
 
 namespace EShopModularMonolith.Modules.Catalog;

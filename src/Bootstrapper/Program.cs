@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using shared.Extensions;
+using Shared.Base.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,7 +84,7 @@ static async void DatabaseInitializer(WebApplication app)
 
     #region Seed Data
 
-    var seeders = scope.ServiceProvider.GetServices<shared.Data.Seed.IDataSeeder>();
+    var seeders = scope.ServiceProvider.GetServices<Shared.Base.Data.Seed.IDataSeeder>();
     foreach(var seeder in seeders)
     {
         await seeder.SeedAsync();

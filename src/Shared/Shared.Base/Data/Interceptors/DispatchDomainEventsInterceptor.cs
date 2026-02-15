@@ -1,14 +1,14 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using shared.DDD;
+using Shared.Base.DDD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace shared.Data.Interceptors
+namespace Shared.Base.Data.Interceptors
 {
     public class DispatchDomainEventsInterceptor(IMediator mediator) : SaveChangesInterceptor
     {

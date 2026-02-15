@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace shared.DDD
+namespace Shared.Base.DDD
 {
     public abstract class Aggregate<T> : Entity<T>, IAggregate<T>
     {

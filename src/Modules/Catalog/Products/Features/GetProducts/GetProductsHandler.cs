@@ -1,8 +1,8 @@
-﻿using catalog.Data;
+using catalog.Data;
 using catalog.Products.Dtos;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using shared.Pagination;
+using Shared.Base.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,7 +1,7 @@
-﻿using basket.Basket.Models;
+using basket.Basket.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using shared.DDD;
+using Shared.Base.DDD;
 using System;
 using System.Collections.Generic;
 using System.Linq;

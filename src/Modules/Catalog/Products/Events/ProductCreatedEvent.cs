@@ -1,5 +1,5 @@
-﻿using catalog.Products.Models;
-using shared.DDD;
+using catalog.Products.Models;
+using Shared.Base.DDD;
 using System;
 using System.Collections.Generic;
 using System.Linq;

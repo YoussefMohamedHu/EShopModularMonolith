@@ -1,4 +1,4 @@
-﻿using Carter;
+using Carter;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace shared.Extensions
+namespace Shared.Base.Extensions
 {
     public static class CarterExtensions
     {

@@ -1,5 +1,5 @@
-﻿using catalog.Products.Events;
-using shared.DDD;
+using catalog.Products.Events;
+using Shared.Base.DDD;
 using System;
 using System.Collections.Generic;
 using System.Linq;

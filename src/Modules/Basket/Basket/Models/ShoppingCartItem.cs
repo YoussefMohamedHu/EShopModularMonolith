@@ -1,4 +1,4 @@
-﻿using shared.DDD;
+using Shared.Base.DDD;
 
 namespace basket.Basket.Models
 {

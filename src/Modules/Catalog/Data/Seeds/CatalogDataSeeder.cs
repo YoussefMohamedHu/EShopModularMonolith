@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using shared.Data.Seed;
+using Microsoft.EntityFrameworkCore;
+using Shared.Base.Data.Seed;
 using System;
 using System.Collections.Generic;
 using System.Linq;

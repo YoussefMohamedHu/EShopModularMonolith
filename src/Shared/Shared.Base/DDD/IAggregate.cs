@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace shared.DDD
+namespace Shared.Base.DDD
 {
     public interface IAggregate<T> : IAggregate, IEntity<T>
     {
