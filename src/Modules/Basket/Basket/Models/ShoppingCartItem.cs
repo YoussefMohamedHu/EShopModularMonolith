@@ -23,5 +23,11 @@ namespace basket.Basket.Models
             ProductName = productName;
         }
 
+        internal void UpdatePrice(decimal newPrice)
+        {
+            ArgumentOutOfRangeException.ThrowIfNegative(newPrice, nameof(newPrice));
+            Price = newPrice;
+        }
+
     }
 }

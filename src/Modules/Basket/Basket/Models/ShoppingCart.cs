@@ -62,5 +62,15 @@ namespace basket.Basket.Models
             _items.Remove(existingItem);
             return true;
         }
+
+        public void UpdateItemPrice(Guid productId , decimal newPrice)
+        {
+            ArgumentOutOfRangeException.ThrowIfNegative(newPrice, nameof(newPrice));
+            var existingItem = _items.FirstOrDefault(item => item.ProductId == productId);
+            if (existingItem != null)
+            {
+                existingItem.UpdatePrice(newPrice);
+            }
+        }
     }
 }
