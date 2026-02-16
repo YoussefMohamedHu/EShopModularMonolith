@@ -1,10 +1,3 @@
-using Carter;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Serilog;
-using Shared.Base.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +15,11 @@ builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
+
+builder.Services.AddMassTransitWithAssemblies(
+    builder.Configuration,
+    typeof(CatalogModule).Assembly,
+    typeof(BasketModule).Assembly);
 
 builder.Services.AddCarterWithAssemblies(
     typeof(CatalogModule).Assembly,

@@ -26,3 +26,13 @@ services:
     restart: always
     ports:
       - "6379:6379"
+  messagebus:
+    container_name: messagebus
+    hostname: ecommerce-mq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    restart: always
+    ports: 
+      - "5672:5672"
+      - "15672:15672"

@@ -1,3 +1,10 @@
 ﻿global using EShopModularMonolith.Modules.Catalog;
 global using EShopModularMonolith.Modules.Order;
 global using EShopModularMonolith.Modules.Basket;
+global using Carter;
+global using Shared.Messaging.Extensions;
+global using Microsoft.AspNetCore.Diagnostics;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using Serilog;
+global using Shared.Base.Extensions;
