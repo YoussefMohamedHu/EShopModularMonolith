@@ -1,0 +1,41 @@
+info:
+  name: Add Item Into Basket
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{eshop_url}}/basket/youssef/items"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{\r
+
+      \      \"Item\": {   \r
+
+      \            \"ShoppingCartId\":\"3a4e7afd-5fcc-4375-82e0-e64ed2b9114b\",\r
+
+      \            \"ProductId\":\"650e8400-e29b-41d4-a716-446655440000\",\r
+
+      \            \"ProductName\": \"Black Sneakers\",\r
+
+      \            \"Quantity\": 1,\r
+
+      \            \"Price\": 900.5,\r
+
+      \            \"Color\": \"Blue\"\r
+
+      \            }\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: 'Generated from cURL: curl -X POST "{{baseUrl}}/basket/{{userName}}/items" -H "Content-Type: application/json" -d "{\n  \"Item\": {\n    \"Id\": \"00000000-0000-0000-0000-000000000005\",\n    \"ShoppingCartId\": \"00000000-0000-0000-0000-000000000002\",\n    \"ProductId\": \"6d3f9872-1aae-4b3f-99f4-d50d3f4da4f8\",\n    \"ProductName\": \"Red Sneakers\",\n    \"Quantity\": 1,\n    \"Price\": 79.5,\n    \"Color\": \"Red\"\n  }\n}"'

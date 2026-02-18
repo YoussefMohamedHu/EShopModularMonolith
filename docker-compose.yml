@@ -10,6 +10,10 @@ services:
 
   messagebus:
     image: rabbitmq:management
+  
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    
 
 volumes:
   postgres_eshopdb:

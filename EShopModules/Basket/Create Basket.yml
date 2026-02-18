@@ -1,0 +1,44 @@
+info:
+  name: Create Basket
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{eshop_url}}/basket"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{ \"Items\": [\r
+
+      \            {   \r
+
+      \            \"ProductId\":\"e4d41cdc-cbcf-4166-9d16-1a91dfc08633\",\r
+
+      \            \"Quantity\": 1,\r
+
+      \            \"Color\": \"Red\"\r
+
+      \            }\r
+
+      \        ]\r
+
+      }"
+  auth:
+    type: bearer
+    token: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJmQlhnelN3eHc1OVNIbmZud1lWNXlEVkVydEFNaU82bGZPN1BYcnp2VTZvIn0.eyJleHAiOjE3NzE0MzA1OTksImlhdCI6MTc3MTQzMDI5OSwianRpIjoib25ydHJvOmEwMDU2YWUwLThjZWItZWQyNy0yNmFhLTMyNjVjZmZlNmI5OCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTA5MC9yZWFsbXMvbXlyZWFsbSIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJmNzAyOWU2OS04YTU0LTQzYTgtOTYwNS1kZThlMmQyZTBmZTkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJteWNsaWVudCIsInNpZCI6Im9SYWxVaFAtLUFLNjFwWnFOZl9vd3d4QyIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cHM6Ly93d3cua2V5Y2xvYWsub3JnIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW15cmVhbG0iLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiWW91c3NlZiBNb2hhbWVk4oCs4oCPIiwicHJlZmVycmVkX3VzZXJuYW1lIjoibXl1c2VybmFtZSIsImdpdmVuX25hbWUiOiJZb3Vzc2VmIiwiZmFtaWx5X25hbWUiOiJNb2hhbWVk4oCs4oCPIiwiZW1haWwiOiJ4QHguY29tIn0.b4qcVfxGvbMcW7F2eR5rv5JaXSyGG_MFM1BofSXERUWY8Fm9r_miGWbU9jetSf6NLgpITAkhegjbxbJlV7euBbqrHWnuQaH-L0GeUFqKEh8_wqqaGx-QgJ-j4x7F70StCNnGtrFYPTFbEeHkjCQLy7LtUfaFZ4zGTwzEuIlmvnqELY-m3c_e5tIJYgDp1sSQHNiE1X793kZgBxYIaAwLl1IFtALGGg7WDjfe-06A3oIPRx9QkToy4EQak3f41vqwZEa2BxG0sAkScxZtSWmICmnzek0SOzTY2xVkf-qEkOLnHsCDvSkGQWaHkGnqM-F-_av2JbQS7xamYIEtWBTwEA
+
+runtime:
+  variables:
+    - name: eshop_url
+      value: http://localhost:5000
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: 'Generated from cURL: curl -X POST "{{baseUrl}}/basket/{{userName}}" -H "Content-Type: application/json" -d "{\n  \"Items\": [\n    {\n      \"Id\": \"00000000-0000-0000-0000-000000000001\",\n      \"ShoppingCartId\": \"00000000-0000-0000-0000-000000000002\",\n      \"ProductId\": \"b1eeb345-0cda-4c5e-b5d1-e47219d2a2d8\",\n      \"ProductName\": \"Blue T-Shirt\",\n      \"Quantity\": 2,\n      \"Price\": 19.99,\n      \"Color\": \"Blue\"\n    }\n  ]\n}"'

@@ -1,0 +1,28 @@
+info:
+  name: Token
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:9090/realms/myrealm/protocol/openid-connect/token
+  body:
+    type: form-urlencoded
+    data:
+      - name: grant_type
+        value: password
+      - name: client_id
+        value: myclient
+      - name: username
+        value: myusername
+      - name: password
+        value: "1234"
+      - name: client_secret
+        value: 24bXgF5p1Iw6NEX6IDzOdaHkTxXtFmvu
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

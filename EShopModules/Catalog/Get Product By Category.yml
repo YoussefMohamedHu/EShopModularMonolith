@@ -1,0 +1,36 @@
+info:
+  name: Get Product By Category
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: "{{eshop_url}}/product/Category/Postman 5"
+  body:
+    type: text
+    data: "{\r
+
+      \    \"Product\":\r
+
+      \    {\r
+
+      \        \"Name\": \"New Product\",\r
+
+      \        \"Price\": 19.99,\r
+
+      \        \"Description\": \"This is a new product description.\",\r
+
+      \        \"ImageFile\": \"image.jpg\",\r
+
+      \        \"Category\": [\"Electronics\",\"Postman\"]\r
+
+      \    }\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

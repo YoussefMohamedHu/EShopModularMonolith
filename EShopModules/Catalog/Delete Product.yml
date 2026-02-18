@@ -1,0 +1,15 @@
+info:
+  name: Delete Product
+  type: http
+  seq: 6
+
+http:
+  method: DELETE
+  url: "{{eshop_url}}/product/ce6b964a-e581-461a-a700-d2150c292e29"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

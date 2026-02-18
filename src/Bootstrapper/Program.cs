@@ -1,4 +1,6 @@
 
+using Keycloak.AuthServices.Authentication;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((hostingContext, configuration) =>
@@ -25,13 +27,14 @@ builder.Services.AddCarterWithAssemblies(
     typeof(CatalogModule).Assembly,
     typeof(BasketModule).Assembly);
 
+builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 
 DatabaseInitializer(app);
 
-app.MapGet("/", () => "Hello World!");
-app.MapCarter();
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler(exceptionHandlerApp =>
 {
@@ -59,7 +62,11 @@ app.UseExceptionHandler(exceptionHandlerApp =>
         await context.Response.WriteAsJsonAsync(problemDetails);
     });
 });
+app.UseAuthentication();
+app.UseAuthorization();
 
+app.MapGet("/", () => "Hello World!");
+app.MapCarter();
 app.Run();
 
 static async void DatabaseInitializer(WebApplication app)

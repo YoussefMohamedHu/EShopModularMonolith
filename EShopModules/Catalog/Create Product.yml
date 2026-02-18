@@ -1,0 +1,36 @@
+info:
+  name: Create Product
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{eshop_url}}/product"
+  body:
+    type: json
+    data: "{\r
+
+      \    \"Product\":\r
+
+      \    {\r
+
+      \        \"Name\": \"\",\r
+
+      \        \"Price\": -19.99,\r
+
+      \        \"Description\": \"This is a new product description.\",\r
+
+      \        \"ImageFile\": \"image.jpg\",\r
+
+      \        \"Category\": [\"Electronics\",\"Postman 5\"]\r
+
+      \    }\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

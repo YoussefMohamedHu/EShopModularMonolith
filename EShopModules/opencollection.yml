@@ -1,0 +1,9 @@
+opencollection: 1.0.0
+
+info:
+  name: EShopModules
+bundled: false
+extensions:
+  ignore:
+    - node_modules
+    - .git

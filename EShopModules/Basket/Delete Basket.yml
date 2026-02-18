@@ -1,0 +1,17 @@
+info:
+  name: Delete Basket
+  type: http
+  seq: 5
+
+http:
+  method: DELETE
+  url: "{{eshop_url}}/basket/youssef"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: 'Generated from cURL: curl -X DELETE "{{baseUrl}}/basket/{{userName}}"'

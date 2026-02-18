@@ -47,14 +47,17 @@ namespace basket.Data.Repositories
 
             var cachedBasket = await cache.GetStringAsync(cacheKey, cancellationToken);
 
-            if (!string.IsNullOrEmpty(cachedBasket))
+            if (!string.IsNullOrEmpty(cachedBasket) )
             {
                 return JsonSerializer.Deserialize<ShoppingCart>(cachedBasket, JsonOptions);
             }
             else
             {
                 var basket = await innerRepository.GetBasket(userName, true, cancellationToken);
-                await cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(basket, JsonOptions));
+                if (basket != null)
+                {
+                    await cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(basket, JsonOptions));
+                }
                 return basket;
             }
         }

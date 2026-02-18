@@ -1,0 +1,38 @@
+info:
+  name: Update Product
+  type: http
+  seq: 3
+
+http:
+  method: PUT
+  url: "{{eshop_url}}/product/ce6b964a-e581-461a-a700-d2150c292e29"
+  body:
+    type: json
+    data: "{\r
+
+      \    \"Product\":\r
+
+      \    {\r
+
+      \        \"Id\": \"ce6b964a-e581-461a-a700-d2150c292e29\",\r
+
+      \        \"Name\": \"Hamasa\",\r
+
+      \        \"Price\": 19.99,\r
+
+      \        \"Description\": \"This is a new product description.\",\r
+
+      \        \"ImageFile\": \"image.jpg\",\r
+
+      \        \"Category\": [\"Electronics\",\"Postman\"]\r
+
+      \    }\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using System.Security.Claims;
 
 namespace basket.Basket.Features.CreateBasket;
 
@@ -14,8 +15,10 @@ public class CreateBasketEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/basket/{userName}", async (string userName, CreateBasketRequest request, ISender sender) =>
+        app.MapPost("/basket", async ( CreateBasketRequest request, ISender sender,ClaimsPrincipal user) =>
         {
+            var userName = user.Identity!.Name!;
+
             var result = await sender.Send(new CreateBasketCommand(userName, request.Items ?? new()));
             var response = new CreateBasketResponse(result.Id);
             return Results.Created($"/basket/{response.Id}", response);
@@ -24,6 +27,7 @@ public class CreateBasketEndpoint : ICarterModule
         .Produces<CreateBasketResponse>(StatusCodes.Status201Created)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Creates a shopping cart")
-        .WithDescription("Creates a shopping cart for the provided user and items.");
+        .WithDescription("Creates a shopping cart for the provided user and items.")
+        .RequireAuthorization();
     }
 }
