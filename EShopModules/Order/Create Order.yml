@@ -1,0 +1,54 @@
+info:
+  name: Create Order
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{eshop_url}}/order"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "Order": {
+          "customerId": "f7029e69-8a54-43a8-9605-de8e2d2e0fe9",
+          "orderName": "My First Order",
+          "shippingAddress": {
+            "emailAddress": "customer@example.com",
+            "addressLine": "123 Main Street",
+            "city": "New York",
+            "country": "USA"
+          },
+          "payment": {
+            "cardName": "John Doe",
+            "cardNumber": "4111111111111111",
+            "expirationDate": "12/26",
+            "cvv": "123"
+          },
+          "items": [
+            {
+              "productId": "e4d41cdc-cbcf-4166-9d16-1a91dfc08633",
+              "productName": "IPhone X",
+              "price": 950.00,
+              "quantity": 1
+            },
+            {
+              "productId": "b1eeb345-0cda-4c5e-b5d1-e47219d2a2d8",
+              "productName": "Blue T-Shirt",
+              "price": 19.99,
+              "quantity": 2
+            }
+          ],
+          "totalPrice": 989.98
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

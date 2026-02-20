@@ -1,0 +1,15 @@
+info:
+  name: Delete Order
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: "{{eshop_url}}/order/3f7b6d8e-1234-4abc-9def-000000000001"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

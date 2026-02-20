@@ -25,7 +25,8 @@ builder.Services.AddMassTransitWithAssemblies(
 
 builder.Services.AddCarterWithAssemblies(
     typeof(CatalogModule).Assembly,
-    typeof(BasketModule).Assembly);
+    typeof(BasketModule).Assembly,
+    typeof(OrderModule).Assembly);
 
 builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
@@ -84,6 +85,11 @@ static async void DatabaseInitializer(WebApplication app)
     var basketDbContext = scope.ServiceProvider.GetRequiredService<basket.Data.BasketDbContext>();
     await basketDbContext.Database.EnsureCreatedAsync();
     await basketDbContext.Database.MigrateAsync();
+
+    // Order Module
+    var orderDbContext = scope.ServiceProvider.GetRequiredService<order.Data.OrderDbContext>();
+    await orderDbContext.Database.EnsureCreatedAsync();
+    await orderDbContext.Database.MigrateAsync();
 
     #endregion
 
