@@ -13,12 +13,11 @@ public class GetBasketHandler(IBasketRepository basketRepository) : IRequestHand
 {
     async Task<GetBasketResult> IRequestHandler<GetBasketQuery, GetBasketResult>.Handle(GetBasketQuery query, CancellationToken cancellationToken)
     {
-        var shoppingCart = await basketRepository.GetBasket(query.UserName,true,cancellationToken);
-            
+        var shoppingCart = await basketRepository.GetBasket(query.UserName, true, cancellationToken);
 
         if (shoppingCart is null)
         {
-            throw new Exception($"Shopping cart for user '{query.UserName}' not found.");
+            return new GetBasketResult(null);
         }
 
         var itemDtos = shoppingCart.Items.Select(item => new ShoppingCartItemDto(

@@ -8,8 +8,8 @@ namespace Shared.Messaging.IntegrationEvents
 {
     public record IntegrationEvent
     {
-        public Guid EventId => Guid.NewGuid();
-        public DateTime OccuredOn => DateTime.Now;
+        public Guid EventId { get; init; } = Guid.NewGuid();
+        public DateTime OccuredOn { get; init; } = DateTime.Now;
         public string EventType => GetType().AssemblyQualifiedName!;
     }
 }

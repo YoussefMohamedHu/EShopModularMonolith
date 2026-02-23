@@ -14,8 +14,10 @@ namespace basket.Data
         public BasketDbContext(DbContextOptions<BasketDbContext> options) : base(options) { }
        
         // DbSet properties for your entities
-         public DbSet<ShoppingCart> ShoppingCarts { get; set; } = default!;
-         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; } = default!;
+         public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
+        public DbSet<ShoppingCartItem> ShoppingCartItems => Set<ShoppingCartItem>();
+
+        public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("Basket");

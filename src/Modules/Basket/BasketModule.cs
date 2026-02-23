@@ -1,5 +1,6 @@
 using System.Reflection;
 using basket.Data;
+using basket.Data.Processors;
 using basket.Data.Repositories;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -39,13 +40,15 @@ public static class BasketModule
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
 
+        
+
         services.AddDbContext<BasketDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseNpgsql(connectionString);
         });
 
-        
+        services.AddHostedService<OutboxProcessor>();
 
         //services.AddScoped<IDataSeeder, BasketDataSeeder>();
 

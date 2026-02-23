@@ -1,0 +1,49 @@
+info:
+  name: Checkout Basket
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{eshop_url}}/basket/checkout"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{\r
+
+      \  \"CheckoutBasket\": {\r
+
+      \    \"UserName\": \"youssef\",\r
+
+      \    \"CustomerId\": \"f7029e69-8a54-43a8-9605-de8e2d2e0fe9\",\r
+
+      \    \"TotalPrice\": 900.5,\r
+
+      \    \"CardName\": \"Youssef Mohamed\",\r
+
+      \    \"CardNumber\": \"1234567890123456\",\r
+
+      \    \"ExpirationDate\": \"12/26\",\r
+
+      \    \"CVV\": \"123\",\r
+
+      \    \"EmailAddress\": \"x@x.com\",\r
+
+      \    \"AddressLine\": \"123 Main St\",\r
+
+      \    \"City\": \"Cairo\",\r
+
+      \    \"Country\": \"Egypt\"\r
+
+      \  }\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

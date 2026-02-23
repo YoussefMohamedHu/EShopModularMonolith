@@ -7,7 +7,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Basket\Features\CheckoutBasket\" />
     <Folder Include="Basket\Features\RemoveItemFromBasket\" />
     <Folder Include="Data\Migrations\" />
     <Folder Include="Data\Seeds\" />

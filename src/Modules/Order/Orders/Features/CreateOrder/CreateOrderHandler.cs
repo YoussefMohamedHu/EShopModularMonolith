@@ -1,5 +1,6 @@
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using order.Data;
 using order.Orders.Dtos;
 using order.Orders.Models;
@@ -65,7 +66,7 @@ namespace order.Orders.Features.CreateOrder
         }
     }
 
-    public class CreateOrderHandler(OrderDbContext dbContext) : IRequestHandler<CreateOrderCommand, CreateOrderResult>
+    public class CreateOrderHandler(OrderDbContext dbContext,ILogger<CreateOrderHandler> logger) : IRequestHandler<CreateOrderCommand, CreateOrderResult>
     {
         public async Task<CreateOrderResult> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
         {
@@ -96,7 +97,10 @@ namespace order.Orders.Features.CreateOrder
                 order.AddItem(order.Id, item.ProductId, item.ProductName, item.Price, item.Quantity);
             }
 
+            logger.LogInformation("Creating order for customer {CustomerId} with {ItemCount} items", order.CustomerId, order.Items.Count);
+
             dbContext.Orders.Add(order);
+
             await dbContext.SaveChangesAsync(cancellationToken);
 
             return new CreateOrderResult(order.Id);

@@ -25,7 +25,6 @@ public static class OrderModule
 
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-       
         #endregion
 
         #region Infrastructure

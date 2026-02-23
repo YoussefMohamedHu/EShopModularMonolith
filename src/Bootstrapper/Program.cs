@@ -21,7 +21,8 @@ builder.Services.AddStackExchangeRedisCache(options =>
 builder.Services.AddMassTransitWithAssemblies(
     builder.Configuration,
     typeof(CatalogModule).Assembly,
-    typeof(BasketModule).Assembly);
+    typeof(BasketModule).Assembly,
+    typeof(OrderModule).Assembly);
 
 builder.Services.AddCarterWithAssemblies(
     typeof(CatalogModule).Assembly,

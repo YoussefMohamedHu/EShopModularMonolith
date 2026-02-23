@@ -2,18 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using basket.Data;
 
 #nullable disable
 
-namespace Basket.Data.Migrations
+namespace basket.Data.Migrations
 {
     [DbContext(typeof(BasketDbContext))]
-    partial class BasketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260221010153_AddOutboxMessages")]
+    partial class AddOutboxMessages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,7 +51,7 @@ namespace Basket.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("ProcessedOn")
+                    b.Property<DateTime>("ProcessedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Type")
